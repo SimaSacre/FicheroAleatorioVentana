@@ -122,6 +122,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 	 * @author Luis Cimorra Bertrand
 	 */
 	public void actionPerformed(ActionEvent e) {
+		String depExist = "DEPARTAMENTO EXISTE.";
 		int dep, confirm;
 		if (e.getSource() == balta) { // SE PULSA EL BOTON alta
 			mensaje.setText(" has pulsado el boton alta");
@@ -129,7 +130,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 				dep = Integer.parseInt(num.getText());
 				if (dep > 0)
 					if (consultar(dep))
-						mensaje.setText("DEPARTAMENTO EXISTE.");
+						mensaje.setText(depExist);
 					else {
 						mensaje.setText("NUEVO DEPARTAMENTO.");
 						grabar(dep, nombre.getText(), loc.getText());
@@ -154,7 +155,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 				dep = Integer.parseInt(num.getText());
 				if (dep > 0)
 					if (consultar(dep)) {
-						mensaje.setText("DEPARTAMENTO EXISTE.");
+						mensaje.setText(depExist);
 						visualiza(dep);
 					} else {
 						mensaje.setText("DEPARTAMENTO NO EXISTE.");
@@ -179,7 +180,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 				dep = Integer.parseInt(num.getText());
 				if (dep > 0)
 					if (consultar(dep)) {
-						mensaje.setText("DEPARTAMENTO EXISTE.");
+						mensaje.setText(depExist);
 						visualiza(dep);
 						confirm = JOptionPane.showConfirmDialog(this, "ESTAS SEGURO DE BORRAR...", "AVISO BORRADO.",
 								JOptionPane.OK_CANCEL_OPTION);
@@ -212,7 +213,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 				dep = Integer.parseInt(num.getText());
 				if (dep > 0)
 					if (consultar(dep)) {
-						mensaje.setText("DEPARTAMENTO EXISTE.");
+						mensaje.setText(depExist);
 						confirm = JOptionPane.showConfirmDialog(this, "ESTAS SEGURO DE MODIFICAR...",
 								"AVISO MODIFICACI�N.", JOptionPane.OK_CANCEL_OPTION);
 						// si devuelve 0 es OK
