@@ -116,6 +116,9 @@ public class VentanaDepart extends JFrame implements ActionListener {
 		ver.addActionListener(this);
 	}
 
+	
+	private static final String NOEXISTEDEPART  = "DEPARTAMENTO NO EXISTE." ;
+	
 	/**
 	 * metodo para manejar los eventos que producen los botones de nuestra ventana al ser activados.
 	 * @param e. el evento que se ha generado
@@ -158,7 +161,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 						mensaje.setText(depExist);
 						visualiza(dep);
 					} else {
-						mensaje.setText("DEPARTAMENTO NO EXISTE.");
+						mensaje.setText(NOEXISTEDEPART);
 						nombre.setText(" ");
 						loc.setText(" ");
 					}
@@ -193,7 +196,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 							loc.setText(" ");
 						}
 					} else {
-						mensaje.setText("DEPARTAMENTO NO EXISTE.");
+						mensaje.setText(NOEXISTEDEPART);
 						nombre.setText(" ");
 						loc.setText(" ");
 					}
@@ -223,7 +226,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 							mensaje.setText(" REGISTRO MODIFICADO: " + dep);
 						}
 					} else {
-						mensaje.setText("DEPARTAMENTO NO EXISTE.");
+						mensaje.setText(NOEXISTEDEPART);
 						nombre.setText(" ");
 						loc.setText(" ");
 					}
