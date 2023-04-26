@@ -22,6 +22,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private static String depExist = "DEPARTAMENTO EXISTE.";
+	private static String depar_error = "DEPARTAMENTO ERRONEO.";
 	JTextField num = new JTextField(10);
 	JTextField nombre = new JTextField(25);
 	JTextField loc = new JTextField(25);
@@ -144,7 +145,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 
 			} catch (java.lang.NumberFormatException ex) // controlar el error del Integer.parseInt
 			{
-				mensaje.setText("DEPARTAMENTO ERR�NEO.");
+				mensaje.setText(depar_error);
 			} catch (IOException ex2) {
 				mensaje.setText("ERRORRR EN EL FICHERO. Fichero no existe. (ALTA)");
 				// lo creo
@@ -170,7 +171,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 
 			} catch (java.lang.NumberFormatException ex) // controlar el error del Integer.parseInt
 			{
-				mensaje.setText("DEPARTAMENTO ERR�NEO");
+				mensaje.setText(depar_error);
 			} catch (IOException ex2) {
 				mensaje.setText(" ERRORRR EN EL FICHERO. Fichero no existe. (ALTA)");
 			}
@@ -205,7 +206,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 
 			} catch (java.lang.NumberFormatException ex) // controlar el error del Integer.parseInt
 			{
-				mensaje.setText("DEPARTAMENTO ERR�NEO");
+				mensaje.setText(depar_error);
 			} catch (IOException ex2) {
 				mensaje.setText("ERRORRR EN EL FICHERO. Fichero no existe. (BORRAR)");
 			}
@@ -235,7 +236,7 @@ public class VentanaDepart extends JFrame implements ActionListener {
 
 			} catch (java.lang.NumberFormatException ex) // controlar el error del Integer.parseInt
 			{
-				mensaje.setText("DEPARTAMENTO ERR�NEO");
+				mensaje.setText(depar_error);
 			} catch (IOException ex2) {
 				mensaje.setText(" ERRORRR EN EL FICHERO. Fichero no existe. (MODIFICAR)");
 			}
