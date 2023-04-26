@@ -13,6 +13,7 @@ import javax.swing.*;
 /**
  * 
  * Con esta clase mostramos nuestra ventana principal y todas sus funciones
+ * 
  * @author Luis Cimorra Bertrand
  * 
  *
@@ -44,10 +45,10 @@ public class VentanaDepart extends JFrame implements ActionListener {
 	Color c; // para poner colores
 	// WHITE,LIGHTGRAY,GRAY,DARKGRAY,BLUE,BLACK,RED,MAGENTA,PINK,ORANGE,CYAN,GREEN,YELLOW
 
-	
 	/**
 	 * 
 	 * Representa la ventana de gestión de departamentos
+	 * 
 	 * @param f. parametro JFrame que recibe el metodo
 	 * @author Luis Cimorra Bertrand
 	 */
@@ -118,49 +119,64 @@ public class VentanaDepart extends JFrame implements ActionListener {
 		ver.addActionListener(this);
 	}
 
-	
-	private static final String NOEXISTEDEPART  = "DEPARTAMENTO NO EXISTE." ;
-	
+	private static final String NOEXISTEDEPART = "DEPARTAMENTO NO EXISTE.";
+
 	/**
-	 * metodo para manejar los eventos que producen los botones de nuestra ventana al ser activados.
+	 * metodo para manejar los eventos que producen los botones de nuestra ventana
+	 * al ser activados.
+	 * 
 	 * @param e. el evento que se ha generado
 	 * @author Luis Cimorra Bertrand
 	 */
 	public void actionPerformed(ActionEvent e) {
 		int dep, confirm;
-		if (e.getSource() == balta) { // SE PULSA EL BOTON alta
-			mensaje.setText(" has pulsado el boton alta");
+		altadepart(e);
+		consuldepart(e);
+		borradepart(e);
+		modifdepart(e);
+
+		if (e.getSource() == fin) { // SE PULSA EL BOTON salir
+			System.exit(0);
+			// dispose();
+		}
+		if (e.getSource() == ver) { // SE PULSA EL BOTON ver por consola
 			try {
-				dep = Integer.parseInt(num.getText());
-				if (dep > 0)
-					if (consultar(dep))
-						mensaje.setText(depExist);
-					else {
-						mensaje.setText("NUEVO DEPARTAMENTO.");
-						grabar(dep, nombre.getText(), loc.getText());
-						mensaje.setText("NUEVO DEPARTAMENTO GRABADO.");
-					}
-				else
-					mensaje.setText("DEPARTAMENTO DEBE SER MAYOR QUE 0");
-
-			} catch (java.lang.NumberFormatException ex) // controlar el error del Integer.parseInt
-			{
-				mensaje.setText(depar_error);
-			} catch (IOException ex2) {
-				mensaje.setText("ERRORRR EN EL FICHERO. Fichero no existe. (ALTA)");
-				// lo creo
-
+				mensaje.setText("Visualizando el fichero por la consolaa.....");
+				verporconsola();
+			} catch (IOException e1) {
+				System.out.println("ERRROR AL LEEERRRRRR AleatorioDep.dat");
+				// e1.printStackTrace();
 			}
 		}
+		if (e.getSource() == breset) { // SE PULSA EL BOTON limpiar
+			mensaje.setText(" has pulsado el boton limpiar..");
+			num.setText(" ");
+			nombre.setText(" ");
+			loc.setText(" ");
+		}
+	}
 
-		if (e.getSource() == consu) { // SE PULSA EL BOTON consultar
-			mensaje.setText(" has pulsado el boton alta");
+	/**
+	 * @param e
+	 */
+	private void modifdepart(ActionEvent e) {
+		int dep;
+		int confirm;
+		if (e.getSource() == modif) { // SE PULSA EL BOTON modificar
+			mensaje.setText(" has pulsado el boton Modificar.");
 			try {
 				dep = Integer.parseInt(num.getText());
 				if (dep > 0)
 					if (consultar(dep)) {
 						mensaje.setText(depExist);
-						visualiza(dep);
+						confirm = JOptionPane.showConfirmDialog(this, "ESTAS SEGURO DE MODIFICAR...",
+								"AVISO MODIFICACI�N.", JOptionPane.OK_CANCEL_OPTION);
+						// si devuelve 0 es OK
+						// mensaje.setText(" has pulsado el boton Borrar "+ confirm);
+						if (confirm == 0) {
+							modificar(dep);
+							mensaje.setText(" REGISTRO MODIFICADO: " + dep);
+						}
 					} else {
 						mensaje.setText(NOEXISTEDEPART);
 						nombre.setText(" ");
@@ -173,11 +189,17 @@ public class VentanaDepart extends JFrame implements ActionListener {
 			{
 				mensaje.setText(depar_error);
 			} catch (IOException ex2) {
-				mensaje.setText(" ERRORRR EN EL FICHERO. Fichero no existe. (ALTA)");
+				mensaje.setText(" ERRORRR EN EL FICHERO. Fichero no existe. (MODIFICAR)");
 			}
-
 		}
+	}
 
+	/**
+	 * @param e
+	 */
+	private void borradepart(ActionEvent e) {
+		int dep;
+		int confirm;
 		if (e.getSource() == borra) { // SE PULSA EL BOTON borrar
 			mensaje.setText(" has pulsado el boton Borrar");
 			try {
@@ -211,21 +233,21 @@ public class VentanaDepart extends JFrame implements ActionListener {
 				mensaje.setText("ERRORRR EN EL FICHERO. Fichero no existe. (BORRAR)");
 			}
 		}
-		if (e.getSource() == modif) { // SE PULSA EL BOTON modificar
-			mensaje.setText(" has pulsado el boton Modificar.");
+	}
+
+	/**
+	 * @param e
+	 */
+	private void consuldepart(ActionEvent e) {
+		int dep;
+		if (e.getSource() == consu) { // SE PULSA EL BOTON consultar
+			mensaje.setText(" has pulsado el boton alta");
 			try {
 				dep = Integer.parseInt(num.getText());
 				if (dep > 0)
 					if (consultar(dep)) {
 						mensaje.setText(depExist);
-						confirm = JOptionPane.showConfirmDialog(this, "ESTAS SEGURO DE MODIFICAR...",
-								"AVISO MODIFICACI�N.", JOptionPane.OK_CANCEL_OPTION);
-						// si devuelve 0 es OK
-						// mensaje.setText(" has pulsado el boton Borrar "+ confirm);
-						if (confirm == 0) {
-							modificar(dep);
-							mensaje.setText(" REGISTRO MODIFICADO: " + dep);
-						}
+						visualiza(dep);
 					} else {
 						mensaje.setText(NOEXISTEDEPART);
 						nombre.setText(" ");
@@ -238,32 +260,46 @@ public class VentanaDepart extends JFrame implements ActionListener {
 			{
 				mensaje.setText(depar_error);
 			} catch (IOException ex2) {
-				mensaje.setText(" ERRORRR EN EL FICHERO. Fichero no existe. (MODIFICAR)");
+				mensaje.setText(" ERRORRR EN EL FICHERO. Fichero no existe. (ALTA)");
 			}
+
 		}
-		if (e.getSource() == fin) { // SE PULSA EL BOTON salir
-			System.exit(0);
-			// dispose();
-		}
-		if (e.getSource() == ver) { // SE PULSA EL BOTON ver por consola
+	}
+
+	/**
+	 * @param e
+	 */
+	private void altadepart(ActionEvent e) {
+		int dep;
+		if (e.getSource() == balta) { // SE PULSA EL BOTON alta
+			mensaje.setText(" has pulsado el boton alta");
 			try {
-				mensaje.setText("Visualizando el fichero por la consolaa.....");
-				verporconsola();
-			} catch (IOException e1) {
-				System.out.println("ERRROR AL LEEERRRRRR AleatorioDep.dat");
-				// e1.printStackTrace();
+				dep = Integer.parseInt(num.getText());
+				if (dep > 0)
+					if (consultar(dep))
+						mensaje.setText(depExist);
+					else {
+						mensaje.setText("NUEVO DEPARTAMENTO.");
+						grabar(dep, nombre.getText(), loc.getText());
+						mensaje.setText("NUEVO DEPARTAMENTO GRABADO.");
+					}
+				else
+					mensaje.setText("DEPARTAMENTO DEBE SER MAYOR QUE 0");
+
+			} catch (java.lang.NumberFormatException ex) // controlar el error del Integer.parseInt
+			{
+				mensaje.setText(depar_error);
+			} catch (IOException ex2) {
+				mensaje.setText("ERRORRR EN EL FICHERO. Fichero no existe. (ALTA)");
+				// lo creo
+
 			}
-		}
-		if (e.getSource() == breset) { // SE PULSA EL BOTON limpiar
-			mensaje.setText(" has pulsado el boton limpiar..");
-			num.setText(" ");
-			nombre.setText(" ");
-			loc.setText(" ");
 		}
 	}
 
 	/**
 	 * Metodo que muestra por consola el contenido del archivo "AleatorioDep.dat".
+	 * 
 	 * @throws IOException
 	 * @author Luis Cimorra Bertrand
 	 */
@@ -331,8 +367,10 @@ public class VentanaDepart extends JFrame implements ActionListener {
 	/**
 	 * 
 	 * Comprueba si un departamento ya existe en el archivo "AleatorioDep.dat".
+	 * 
 	 * @param dep. el numero de departamento a consultar
-	 * @return true si el departamento existe, false en caso contrario o si se produce un error al leer el archivo
+	 * @return true si el departamento existe, false en caso contrario o si se
+	 *         produce un error al leer el archivo
 	 * @throws IOException si se produce un error de lectura en el archivo
 	 * @author Luis Cimorra Bertrand
 	 */
@@ -371,7 +409,9 @@ public class VentanaDepart extends JFrame implements ActionListener {
 
 	/**
 	 * 
-	 * Pone a 0 el departamento que se quiere borrar y a blancos el nombre y la localidad
+	 * Pone a 0 el departamento que se quiere borrar y a blancos el nombre y la
+	 * localidad
+	 * 
 	 * @param dep. numero de departamento a borrar
 	 * @author Luis Cimorra Bertrand
 	 */
@@ -404,10 +444,11 @@ public class VentanaDepart extends JFrame implements ActionListener {
 		}
 	} // fin borrar
 
-	
 	/**
-	 * se encarga de asignar los datos tecleados por el usuario en los campos de nombre y
-	 * localidad al registro correspondiente al número de departamento especificado.
+	 * se encarga de asignar los datos tecleados por el usuario en los campos de
+	 * nombre y localidad al registro correspondiente al número de departamento
+	 * especificado.
+	 * 
 	 * @param dep. El numero de departamento a modificar
 	 * @author Luis Cimorra Bertrand
 	 */
@@ -439,10 +480,11 @@ public class VentanaDepart extends JFrame implements ActionListener {
 		}
 	} // fin modificar
 
-	
 	/**
 	 * 
-	 * Graba un registro en el archivo "AleatorioDep.dat" con los datos proporcionados.
+	 * Graba un registro en el archivo "AleatorioDep.dat" con los datos
+	 * proporcionados.
+	 * 
 	 * @param dep. El número de departamento a grabar.
 	 * @param nom. El nombre del departamento a grabar.
 	 * @param loc. La localidad del departamento a grabar.
