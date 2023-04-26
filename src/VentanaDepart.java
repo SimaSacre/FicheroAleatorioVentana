@@ -21,6 +21,7 @@ import javax.swing.*;
 public class VentanaDepart extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private static String depExist = "DEPARTAMENTO EXISTE.";
 	JTextField num = new JTextField(10);
 	JTextField nombre = new JTextField(25);
 	JTextField loc = new JTextField(25);
@@ -125,7 +126,6 @@ public class VentanaDepart extends JFrame implements ActionListener {
 	 * @author Luis Cimorra Bertrand
 	 */
 	public void actionPerformed(ActionEvent e) {
-		String depExist = "DEPARTAMENTO EXISTE.";
 		int dep, confirm;
 		if (e.getSource() == balta) { // SE PULSA EL BOTON alta
 			mensaje.setText(" has pulsado el boton alta");
